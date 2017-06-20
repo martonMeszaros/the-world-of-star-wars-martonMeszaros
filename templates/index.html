@@ -16,6 +16,7 @@
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous" defer></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous" defer></script>
   <script src="/static/js/dom_generator.js" defer></script>
+  <script src="/static/js/residents_closure.js" defer></script>
   <script src="/static/js/planets_closure.js" defer></script>
   <script src="/static/js/main.js" defer></script>
 </head>
@@ -42,6 +43,39 @@
       </thead>
       <tbody id="planets-table-body"></tbody>
     </table>
+
+    <section id="residents-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="modal-title">Residents</h2>
+      </header>
+      <section class="modal-body">
+        <table class="table table-bordered table-stripped">
+          <thead>
+          <tr>
+            <th>Name</th>
+            <th>Height (cm)</th>
+            <th>Mass (kg)</th>
+            <th>Hair color</th>
+            <th>Skin color</th>
+            <th>Eye color</th>
+            <th>Birth year</th>
+            <th>Gender</th>
+          </tr>
+          </thead>
+          <tbody id="residents-table-body"></tbody>
+        </table>
+      </section>
+      <footer class="modal-footer">
+        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+      </footer>
+    </div>
+    </div>
+    </section>
   </main>
 </body>
 </html>

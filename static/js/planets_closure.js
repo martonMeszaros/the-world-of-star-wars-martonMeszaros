@@ -21,13 +21,23 @@ const planets = (function() {
             ]) {
                 rowElem.appendChild(generateDOM.newElem('td', planetData));
             }
-            let residents;
+            let residentsCell;
             if(planet.residents.length > 0) {
-                residents = `${planet.residents.length} residents`;
+                residentsCell = generateDOM.newElem('button', `${planet.residents.length} residents`);
+                residentsCell.classList.add('btn', 'btn-default');
+                residentsCell.setAttribute('type', 'button');
+                residentsCell.dataset.toggle='modal';
+                residentsCell.dataset.target='#residents-modal';
+                residentsCell.addEventListener('click', function(){
+                    residents.load(planet)
+                });
+                let tdElem = generateDOM.newElem('td');
+                tdElem.appendChild(residentsCell);
+                rowElem.appendChild(tdElem);
             } else {
-                residents = 'No known residents';
+                residentsCell = 'No known residents';
+                rowElem.appendChild(generateDOM.newElem('td', residentsCell));
             }
-            rowElem.appendChild(generateDOM.newElem('td', residents));
             tableBodyElem.appendChild(rowElem);
         }
     }
