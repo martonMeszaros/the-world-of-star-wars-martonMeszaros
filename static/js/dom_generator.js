@@ -8,6 +8,6 @@ const generateDOM = (function() {
     }
     
     return {
-        newElem = function(tag, innerText=null) {return createNewDOMElement(tag, innerText);}
+        newElem: function(tag, innerText=null) {return createNewDOMElement(tag, innerText);}
     };
 })();

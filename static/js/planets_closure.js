@@ -10,7 +10,7 @@ const planets = (function() {
     function displayPlanets(planets) {
         var tableBodyElem = document.getElementById('planets-table-body');
         for(let planet of planets) {
-            let rowElem = document.createElement('tr');
+            let rowElem = generateDOM.newElem('tr');
             for(let planetData of [
                     planet.name,
                     planet.diameter,
@@ -19,32 +19,26 @@ const planets = (function() {
                     planet.surface_water,
                     planet.population
             ]) {
-                let tdElem = document.createElement('td');
-                let tdText = document.createTextNode(planetData);
-                tdElem.appendChild(tdText);
-                rowElem.appendChild(tdElem);
+                rowElem.appendChild(generateDOM.newElem('td', planetData));
             }
-            let tdElem = document.createElement('td'),
-                tdText;
+            let residents;
             if(planet.residents.length > 0) {
-                tdText = document.createTextNode(`${planet.residents.length} residents`);
+                residents = `${planet.residents.length} residents`;
             } else {
-                tdText = document.createTextNode('No known residents');
+                residents = 'No known residents';
             }
-            tdElem.appendChild(tdText);
-            rowElem.appendChild(tdElem);
+            rowElem.appendChild(generateDOM.newElem('td', residents));
             tableBodyElem.appendChild(rowElem);
         }
     }
 
-    function loadPage(page) {
-        if(page === null) {
-            page = indexPage;
+    function loadPage(url) {
+        if(url === null) {
+            url = indexPage;
         }
-
         $.ajax({
             type: 'GET',
-            url: page,
+            url: url,
             success: function(returnObj) {
                 nextPage = returnObj.next;
                 previousPage = returnObj.previous;
@@ -55,12 +49,10 @@ const planets = (function() {
     }
 
     return {
-        indexPage: 'http://swapi.co/api/planets',
+        indexPage: indexPage,
         getNextPage: function() {return nextPage;},
         getPreviousPage: function() {return previousPage;},
 
-        loadPage: function(page) {
-            loadPage(page);
-        }
+        loadPage: function(url) {loadPage(url);}
     };
 })();
