@@ -42,6 +42,38 @@ const planets = (function() {
         }
     }
 
+    function killEventListeners(DOMelem) {
+        let newDOMElem = DOMelem.cloneNode(true);
+        DOMelem.parentNode.replaceChild(newDOMElem, DOMelem);
+        return newDOMElem;
+    }
+
+    function updatePaginationButtons() {
+        let prevPageButton = document.getElementById('previous-page');
+        let nextPageButton = document.getElementById('next-page');
+        prevPageButton = killEventListeners(prevPageButton);
+        nextPageButton = killEventListeners(nextPageButton);
+
+        if(previousPage === null) {
+            prevPageButton.classList.add('disabled');
+        } else {
+            prevPageButton.classList.remove('disabled');
+            prevPageButton.addEventListener('click', function() {
+                loadPage(previousPage);
+            });
+        }
+
+        if(nextPage === null) {
+            nextPageButton.classList.add('disabled');
+        } else {
+            nextPageButton.classList.remove('disabled');
+            nextPageButton.addEventListener('click', function() {
+                loadPage(nextPage);
+            });
+
+        }
+    }
+
     function loadPage(url) {
         if(url === null) {
             url = indexPage;
@@ -52,6 +84,7 @@ const planets = (function() {
             success: function(returnObj) {
                 nextPage = returnObj.next;
                 previousPage = returnObj.previous;
+                updatePaginationButtons();
                 clearTable();
                 displayPlanets(returnObj.results);
             }
@@ -60,8 +93,8 @@ const planets = (function() {
 
     return {
         indexPage: indexPage,
-        getNextPage: function() {return nextPage;},
-        getPreviousPage: function() {return previousPage;},
+        getNextPage: () => nextPage,
+        getPreviousPage: () => previousPage,
 
         loadPage: function(url) {loadPage(url);}
     };
