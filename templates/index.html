@@ -21,12 +21,22 @@
   <script src="/static/js/main.js" defer></script>
 </head>
 <body>
-  <header class="container">
+  <header class="page-header container">
     <h1>Star Wars universe planets</h1>
-    <nav>
+    <div class="row">
+    <nav class="col-sm-3">
       <button id="previous-page" class="btn btn-primary">Previous</button>
       <button id="next-page" class="btn btn-primary">Next page</button>
     </nav>
+    <nav class="col-sm-3 col-sm-offset-6 text-right">
+    {% if session.get('user') %}
+      <a class="btn btn-primary" href="/logout">Logout</a>
+    {% else %}
+      <a class="btn btn-primary" href="/login">Login</a>
+      <a class="btn btn-primary" href="/register">Register</a>
+    {% endif %}
+    </nav>
+    </div>
   </header>
   <main class="container">
     <table class="table table-bordered table-stripped">
