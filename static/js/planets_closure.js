@@ -28,7 +28,7 @@ const planets = (function() {
                 residentsCell.setAttribute('type', 'button');
                 residentsCell.dataset.toggle='modal';
                 residentsCell.dataset.target='#residents-modal';
-                residentsCell.addEventListener('click', function(){
+                residentsCell.addEventListener('mouseenter', function(){
                     residents.load(planet)
                 });
                 let tdElem = generateDOM.newElem('td');
