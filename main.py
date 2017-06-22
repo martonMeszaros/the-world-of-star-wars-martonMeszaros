@@ -1,5 +1,8 @@
-from flask import Flask, redirect, render_template, request, session
+from flask import Flask, render_template
+
+import users
 app = Flask(__name__)
+app.secret_key = ':3{ET|:Ha7:_@~Rma7lPxz$lg-J|V,'
 
 
 @app.route('/')
@@ -9,22 +12,17 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    else:
-        pass
+    return users.login()
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    return users.register()
 
 
 @app.route('/logout')
 def logout():
-    if session.get('username'):
-        session.pop('username', None)
-    return redirect('/')
+    return users.logout()
 
 
 @app.errorhandler(404)
