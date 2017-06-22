@@ -1,10 +1,28 @@
 from flask import Flask, render_template
+
+import users
 app = Flask(__name__)
+app.secret_key = ':3{ET|:Ha7:_@~Rma7lPxz$lg-J|V,'
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return users.login()
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    return users.register()
+
+
+@app.route('/logout')
+def logout():
+    return users.logout()
 
 
 @app.errorhandler(404)

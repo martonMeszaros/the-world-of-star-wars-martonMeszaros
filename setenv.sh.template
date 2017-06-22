@@ -1,0 +1,21 @@
+#!/usr/bit/bash
+
+deactivate() {
+    unset MY_PSQL_DBNAME
+    unset MY_PSQL_USERNAME
+    unset MY_PSQL_HOST
+    unset MY_PSQL_PASSWORD
+    # unset FLASK_DEBUG
+    unset -f deactivate
+}
+
+MY_PSQL_DBNAME=""
+MY_PSQL_USERNAME=""
+MY_PSQL_HOST=""
+MY_PSQL_PASSWORD=""
+
+export MY_PSQL_DBNAME
+export MY_PSQL_USERNAME
+export MY_PSQL_HOST
+export MY_PSQL_PASSWORD
+# export FLASK_DEBUG=1
