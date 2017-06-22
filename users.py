@@ -37,10 +37,84 @@ def new_user(user_data):
     )
 
 
+@connect_to_db
+def user_in_database_query(username):
+    return (
+        '''
+        SELECT id 
+        FROM users 
+        WHERE username = %s;
+        ''',
+        [username]
+    )
+
+
+def user_in_database(username):
+    if len(user_in_database_query(username)) > 0:
+        return True
+    return False
+
+
+@connect_to_db
+def get_user_salt_query(username):
+    return (
+        '''
+        SELECT salt 
+        FROM users 
+        WHERE username = %s;
+        ''',
+        [username]
+    )
+
+
+def get_user_salt(username):
+    return get_user_salt_query(username)[0][0]
+
+
+@connect_to_db
+def correct_credentials_query(user_data):
+    return (
+        '''
+        SELECT id 
+        FROM users 
+        WHERE username = %(username)s AND password = %(password)s;
+        ''',
+        user_data
+    )
+
+
+def correct_credentials(user_data):
+    if len(correct_credentials_query(user_data)) > 0:
+        return True
+    return False
+
+
 def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
+        user_data = {
+            'username': request.form.get('username'),
+            'password': request.form.get('password')
+        }
+        if not (
+                user_data['username'] is None and
+                user_data['password'] is None
+        ):
+            if user_in_database(user_data['username']):
+                user_data['salt'] = get_user_salt(user_data['username'])
+                user_data['password'] = hash_password(user_data['password'], user_data['salt'])
+                if correct_credentials(user_data):
+                    if session.get('user'):
+                        session.pop('user', None)
+                    session['user'] = user_data['username']
+                    return redirect('/')
+                else:   # Incorrect credentials
+                    pass
+            else:   # User doesn't exist
+                pass
+        else:   # Missing input
+            pass
         return render_template('login.html')
 
 
@@ -68,10 +142,12 @@ def register():
                     new_user(user_data)
                     session['user'] = user_data['username']
                     return redirect('/')
-                else:   # two passwords didn't match
+                else:   # Two passwords didn't match
                     pass
-            else:
-                pass    # username already exists
+            else:   # Username already exists
+                pass
+        else:   # Missing input
+            pass
         return render_template('register.html')
 
 
