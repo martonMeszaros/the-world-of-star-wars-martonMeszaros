@@ -50,12 +50,11 @@ def login():
                     session['user'] = user_data['username']
                     return redirect('/')
                 else:   # Incorrect credentials
-                    pass
+                    return render_template('login.html', username=user_data['username'])
             else:   # User doesn't exist
-                pass
+                return render_template('login.html')
         else:   # Missing input
-            pass
-        return render_template('login.html')
+            return render_template('login.html')
 
 
 def register():
@@ -84,12 +83,11 @@ def register():
                     session['user'] = user_data['username']
                     return redirect('/')
                 else:   # Two passwords didn't match
-                    pass
+                    return render_template('register.html', username=user_data['username'])
             else:   # Username already exists
-                pass
+                return render_template('register.html')
         else:   # Missing input
-            pass
-        return render_template('register.html')
+            return render_template('register.html')
 
 
 def logout():
