@@ -28,11 +28,15 @@ def logout():
 
 @app.route('/vote/<int:planet_id>', methods=['POST'])
 def vote_for_planet(planet_id):
-    print(session.get('user'))
     if session.get('user'):
         return vote.new_vote(planet_id)
     else:
         pass
+
+
+@app.route('/votes')
+def get_votes():
+    return vote.get_votes()
 
 
 @app.errorhandler(404)

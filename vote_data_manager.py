@@ -18,3 +18,16 @@ def new_vote(planet_id):
         ''',
         [planet_id, user_id, datetime.datetime.now()]
     )
+
+
+@connect_to_db
+def get_votes():
+    return (
+        '''
+        SELECT planet_id, COUNT(id)
+        FROM planet_votes
+        GROUP BY planet_id
+        ORDER BY planet_id ASC;
+        ''',
+        []
+    )

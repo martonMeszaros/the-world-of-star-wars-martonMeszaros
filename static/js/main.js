@@ -6,4 +6,5 @@ $(document).ready(function() {
         planets.setUserLoggedIn(false);
     }
     planets.loadPage(planets.indexPage);
+    vote.loadVotes();
 });

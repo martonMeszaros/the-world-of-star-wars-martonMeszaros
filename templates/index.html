@@ -30,11 +30,12 @@
   <header class="page-header container">
     <h1>Star Wars universe planets</h1>
     <div class="row">
-    <nav class="col-sm-3">
+    <nav class="col-sm-4">
       <button id="previous-page" class="btn btn-primary">Previous</button>
       <button id="next-page" class="btn btn-primary">Next page</button>
+      <button id="votes" class="btn btn-default" data-toggle="modal" data-target="#votes-modal">Show votes</button>
     </nav>
-    <nav class="col-sm-3 col-sm-offset-6 text-right">
+    <nav class="col-sm-3 col-sm-offset-5 text-right">
     {% if session.get('user') %}
       <span class="btn">{{ session['user'] }}</span>
       <a class="btn btn-primary" href="/logout">Logout</a>
@@ -88,6 +89,33 @@
           </tr>
           </thead>
           <tbody id="residents-table-body"></tbody>
+        </table>
+      </section>
+      <footer class="modal-footer">
+        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+      </footer>
+    </div>
+    </div>
+    </section>
+
+    <section id="votes-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <header class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="modal-title">Planet votes</h2>
+      </header>
+      <section class="modal-body">
+        <table class="table table-bordered table-stripped">
+          <thead>
+          <tr>
+            <th>Planet</th>
+            <th>Votes</th>
+          </tr>
+          </thead>
+          <tbody id="votes-table-body"></tbody>
         </table>
       </section>
       <footer class="modal-footer">
