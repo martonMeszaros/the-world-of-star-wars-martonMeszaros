@@ -1,4 +1,6 @@
 const planets = (function() {
+    var USERLOGGEDIN;
+
     var indexPage = 'http://swapi.co/api/planets',
         nextPage = null,
         previousPage = null;
@@ -28,7 +30,7 @@ const planets = (function() {
                 residentsCell.setAttribute('type', 'button');
                 residentsCell.dataset.toggle='modal';
                 residentsCell.dataset.target='#residents-modal';
-                residentsCell.addEventListener('mouseenter', function(){
+                residentsCell.addEventListener('click', function(){
                     residents.load(planet)
                 });
                 let tdElem = generateDOM.newElem('td');
@@ -37,6 +39,19 @@ const planets = (function() {
             } else {
                 residentsCell = 'No known residents';
                 rowElem.appendChild(generateDOM.newElem('td', residentsCell));
+            }
+            if (USERLOGGEDIN) {
+                let voteCell = generateDOM.newElem('button', 'Vote');
+                voteCell.classList.add('btn', 'btn-default');
+                voteCell.setAttribute('type', 'button');
+                voteCell.addEventListener('click', function() {
+                    let planetId = planet.url.split('/');
+                    planetId = Number(planetId[planetId.length - 2]);
+                    vote.newVote(planetId);
+                });
+                let tdElem = generateDOM.newElem('td');
+                tdElem.appendChild(voteCell);
+                rowElem.appendChild(tdElem);
             }
             tableBodyElem.appendChild(rowElem);
         }
@@ -74,7 +89,7 @@ const planets = (function() {
         }
     }
 
-    function loadPage(url) {
+    function loadPage(url, USERLOGGEDIN) {
         if(url === null) {
             url = indexPage;
         }
@@ -86,7 +101,7 @@ const planets = (function() {
                 previousPage = returnObj.previous;
                 updatePaginationButtons();
                 clearTable();
-                displayPlanets(returnObj.results);
+                displayPlanets(returnObj.results, USERLOGGEDIN);
             }
         });
     }
@@ -96,6 +111,10 @@ const planets = (function() {
         getNextPage: () => nextPage,
         getPreviousPage: () => previousPage,
 
-        loadPage: function(url) {loadPage(url);}
+        loadPage: function(url) {
+            loadPage(url);
+        },
+
+        setUserLoggedIn: function(boolean) {USERLOGGEDIN = boolean;}
     };
 })();

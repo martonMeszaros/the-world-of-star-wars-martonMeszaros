@@ -17,8 +17,14 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous" defer></script>
   <script src="/static/js/dom_generator.js" defer></script>
   <script src="/static/js/residents_closure.js" defer></script>
+  <script src="/static/js/voting_closure.js" defer></script>
   <script src="/static/js/planets_closure.js" defer></script>
-  <script src="/static/js/main.js" defer></script>
+  <script id="js-main" src="/static/js/main.js" defer
+      {% if session['user'] %}
+        data-user="true"
+      {% else %}
+        data-user="false"
+      {% endif %}></script>
 </head>
 <body>
   <header class="page-header container">
@@ -50,6 +56,9 @@
         <th>Surface water (%)</th>
         <th>Population</th>
         <th>Residents</th>
+        {% if session['user'] %}
+        <th>Vote for planet</th>
+        {% endif %}
       </tr>
       </thead>
       <tbody id="planets-table-body"></tbody>

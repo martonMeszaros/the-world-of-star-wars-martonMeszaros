@@ -1,6 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 
 import users
+import vote
 app = Flask(__name__)
 app.secret_key = ':3{ET|:Ha7:_@~Rma7lPxz$lg-J|V,'
 
@@ -23,6 +24,15 @@ def register():
 @app.route('/logout')
 def logout():
     return users.logout()
+
+
+@app.route('/vote/<int:planet_id>', methods=['POST'])
+def vote_for_planet(planet_id):
+    print(session.get('user'))
+    if session.get('user'):
+        return vote.new_vote(planet_id)
+    else:
+        pass
 
 
 @app.errorhandler(404)
