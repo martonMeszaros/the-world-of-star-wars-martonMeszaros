@@ -1,7 +1,7 @@
 const planets = (function() {
     var USERLOGGEDIN;
 
-    var indexPage = 'http://swapi.co/api/planets',
+    var indexPage = 'https://swapi.co/api/planets',
         nextPage = null,
         previousPage = null;
     
