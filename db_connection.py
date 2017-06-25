@@ -1,4 +1,5 @@
-from os import environ
+from os
+import urllib
 
 from flask import abort
 import psycopg2
@@ -6,22 +7,16 @@ import psycopg2
 
 def connect_to_db(wrapped_function):
     def establish_db_connection(*args, **kwargs):
-        _db_connection = None
-        _cursor = None
-        connection_data = {
-            'dbname': environ.get('MY_PSQL_DBNAME'),
-            'user': environ.get('MY_PSQL_USERNAME'),
-            'host': environ.get('MY_PSQL_HOST'),
-            'password': environ.get('MY_PSQL_PASSWORD')
-        }
-        for key, value in connection_data.items():
-            if value is None:
-                abort(500, 'No database configuration found!')
-                break
-        connection_string = "dbname='{dbname}' user='{user}' host='{host}' password='{password}'"
-        connection_string = connection_string.format(**connection_data)
         try:
-            _db_connection = psycopg2.connect(connection_string)
+            urllib.parse.uses_netloc.append('postgres')
+            url = urllib.parse.urlparse(os.environ.get('DATABASE_URL'))
+            _db_connection = psycopg2.connect(
+                database=url.path[1:],
+                user=url.username,
+                password=url.password,
+                host=url.hostname,
+                port=url.port
+            )
             _db_connection.autocommit = True
             _cursor = _db_connection.cursor()
             _cursor.execute(

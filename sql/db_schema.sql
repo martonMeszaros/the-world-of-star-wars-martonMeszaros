@@ -1,8 +1,3 @@
-DROP DATABASE IF EXISTS starwars;
-
-CREATE DATABASE starwars;
-\connect starwars;
-
 CREATE TABLE users (
     id SERIAL NOT NULL PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,

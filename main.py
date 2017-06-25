@@ -52,7 +52,3 @@ def method_not_allowed(error):
 @app.errorhandler(500)
 def internal_server_error(error):
     return render_template('error/500.html', error=error), 500
-
-
-if __name__ == '__main__':
-    app.run()
