@@ -6,7 +6,10 @@ const planets = (function() {
         previousPage = null;
     
     function secureUrl(url) {
-        return url.replace('http', 'https');
+        if(url !== null) {
+            return url.replace('http', 'https');
+        }
+        return url
     }
 
     function clearTable() {
