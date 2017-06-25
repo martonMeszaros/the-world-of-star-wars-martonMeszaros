@@ -99,10 +99,10 @@ const planets = (function() {
         }
         $.ajax({
             type: 'GET',
-            url: secureUrl(url),
+            url: url,
             success: function(returnObj) {
-                nextPage = returnObj.next;
-                previousPage = returnObj.previous;
+                nextPage = secureUrl(returnObj.next);
+                previousPage = secureUrl(returnObj.previous);
                 updatePaginationButtons();
                 clearTable();
                 displayPlanets(returnObj.results, USERLOGGEDIN);
