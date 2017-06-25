@@ -1,7 +1,7 @@
 const planets = (function() {
     var USERLOGGEDIN;
 
-    var indexPage = 'https://swapi.co/api/planets',
+    var indexPage = 'http://swapi.co/api/planets',
         nextPage = null,
         previousPage = null;
     
@@ -99,10 +99,10 @@ const planets = (function() {
         }
         $.ajax({
             type: 'GET',
-            url: url,
+            url: secureUrl(url),
             success: function(returnObj) {
-                nextPage = secureUrl(returnObj.next);
-                previousPage = secureUrl(returnObj.previous);
+                nextPage = returnObj.next;
+                previousPage = returnObj.previous;
                 updatePaginationButtons();
                 clearTable();
                 displayPlanets(returnObj.results, USERLOGGEDIN);
