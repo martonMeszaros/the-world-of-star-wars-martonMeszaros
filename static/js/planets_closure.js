@@ -4,6 +4,10 @@ const planets = (function() {
     var indexPage = 'http://swapi.co/api/planets',
         nextPage = null,
         previousPage = null;
+    
+    function secureUrl(url) {
+        return url.replace('http', 'https');
+    }
 
     function clearTable() {
         document.getElementById('planets-table-body').innerHTML = '';
@@ -95,7 +99,7 @@ const planets = (function() {
         }
         $.ajax({
             type: 'GET',
-            url: url,
+            url: secureUrl(url),
             success: function(returnObj) {
                 nextPage = returnObj.next;
                 previousPage = returnObj.previous;

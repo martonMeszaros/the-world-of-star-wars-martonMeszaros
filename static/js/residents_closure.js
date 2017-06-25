@@ -3,6 +3,10 @@ const residents = (function() {
         document.getElementById('residents-table-body').innerHTML = '';
     }
 
+    function secureUrl(url) {
+        return url.replace('http', 'https');
+    }
+
     function displayResident(resident) {
         var trElem = generateDOM.newElem('tr');
         for(let residentData of [
@@ -25,7 +29,7 @@ const residents = (function() {
         for(let residentUrl of planet.residents) {
             $.ajax({
                 type: 'GET',
-                url: residentUrl,
+                url: secureUrl(residentUrl),
                 success: function(returnObj) {
                     displayResident(returnObj);
                 }
